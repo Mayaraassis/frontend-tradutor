@@ -8,14 +8,14 @@
             type="number"
             id="numero"
             name="numero"
-            v-model="formData.numero"
+            v-model="formData.number"
             required
           />
           <button type="submit" class="btn-submit">Traduzir</button>
         </div>
       </form>
-      <div v-if="formData.extenso != ''" class="result">
-        {{ formData.extenso }}
+      <div v-if="formData.inWords != ''" class="result">
+        {{ formData.inWords }}
       </div>
     </div>
   </div>
@@ -28,21 +28,21 @@ export default {
   data() {
     return {
       formData: {
-        numero: null,
-        extenso: "",
+        number: null,
+        inWords: "",
       },
     };
   },
   methods: {
     async submitForm() {
-      if (this.formData.numero < 0 || this.formData.numero > 999) {
+      if (this.formData.number < 0 || this.formData.number > 999) {
         alert("Por favor, digite um número entre 0 e 999.");
         return;
       }
       await axios
-        .post("http://localhost:3000/tradutor", this.formData)
+        .post("https://api-traducao.onrender.com/translate", this.formData)
         .then((response) => {
-          this.formData.extenso = response.data.extenso;
+          this.formData.inWords = response.data.inWords;
         })
         .catch((error) => {
           console.error(error);
